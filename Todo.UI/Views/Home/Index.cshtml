@@ -1,0 +1,41 @@
+﻿@using System.Text.Json
+
+@{
+    ViewData["Title"] = "Todos";
+    string assetManifestPath = "client-app/build/asset-manifest.json";
+
+    // Read the asset-manifest.json file
+    string assetManifestJson = File.ReadAllText(assetManifestPath);
+
+    // Parse JSON
+    JsonElement assetManifest = JsonDocument.Parse(assetManifestJson).RootElement;
+
+    // Get the hashed filename for the main JavaScript file
+    string mainJsPath = assetManifest.GetProperty("files").GetProperty("main.js").GetString();
+    string mainCssPath = assetManifest.GetProperty("files").GetProperty("main.css").GetString();
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test App</title>
+    <script defer src="@mainJsPath"></script>
+    <link href="@mainCssPath" rel="stylesheet">
+    <!-- Include any necessary meta tags, stylesheets, or scripts -->
+</head>
+<body>
+    <div id="root">
+        <!-- This div will be replaced with the React app -->
+    </div>
+
+    @* Optionally, you can pass initial data to the React app by embedding it in a script tag *@
+    <script>
+        window.initialData = {
+            message: "Hello from ASP.NET Core!"
+        };
+        console.log(window);
+    </script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Todo.UI/.vs
+/Todo.UI/bin/Debug/net6.0
+/Todo.UI/obj
+/Todo.UI/wwwroot
