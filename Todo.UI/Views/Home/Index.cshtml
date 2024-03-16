@@ -12,7 +12,7 @@
 
     // Get the hashed filename for the main JavaScript file
     string mainJsPath = assetManifest.GetProperty("files").GetProperty("main.js").GetString();
-    string mainCssPath = assetManifest.GetProperty("files").GetProperty("main.css").GetString();
+    //string mainCssPath = assetManifest.GetProperty("files").GetProperty("main.css").GetString();
 }
 
 <!DOCTYPE html>
@@ -22,7 +22,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Test App</title>
     <script defer src="@mainJsPath"></script>
-    <link href="@mainCssPath" rel="stylesheet">
+    @* <link href="@mainCssPath" rel="stylesheet"> *@
     <!-- Include any necessary meta tags, stylesheets, or scripts -->
 </head>
 <body>

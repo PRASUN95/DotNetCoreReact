@@ -1,14 +1,18 @@
+// App.tsx
 import React from 'react';
-import './App.css';
+import { Provider } from 'react-redux';
+import { store } from './Redux/store';
+import TodoList from './components/Todo/TodoList';
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <p>
-        This is some test paragraph.
-      </p>
-    </div>
+    <Provider store={store}>
+      <div className="app">
+        <h1>TODO App</h1>
+        <TodoList />
+      </div>
+    </Provider>
   );
-}
+};
 
 export default App;
