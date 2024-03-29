@@ -1,4 +1,7 @@
 import { useState } from "react";
+import data from "../../src/Mocks/response.json"
+
+type refData = typeof data.frequency;
 
 interface LoanDetails {
   loanAmount: number;
@@ -8,7 +11,7 @@ interface LoanDetails {
 
 interface LoanRepayment {
   amount: number;
-  repaymentFrequency: RepaymentFrequency;
+  repaymentFrequency?: RepaymentFrequency;
 }
 
 export type RepaymentFrequency = "monthly" | "fortnightly" | "weekly";
@@ -26,12 +29,19 @@ const calculateRepayment = ({
 
 const useLoanCalculator = (
   loanDetails: LoanDetails
-): [number, (loanDetails: LoanDetails) => void] => {
-  console.log("I am in useLoanCalculator");
-  const [calculatedAmount, setCalculatedAmount] = useState<number>(0);
+): [LoanRepayment[], (loanDetails: LoanDetails) => void] => {
+  //console.log("I am in useLoanCalculator");
+  const interestRates: refData = data.frequency;
+  const [calculatedAmount, setCalculatedAmount] = useState<LoanRepayment[]>([]);
   const calculateRepaymentAmount = (loanDetails: LoanDetails) => {
-    const calculatedAmount = calculateRepayment(loanDetails);
-    setCalculatedAmount(calculatedAmount);
+    const data: LoanRepayment[] = interestRates.map(({id, description}) => {
+      loanDetails.interestRate = id;
+      return {
+        amount : calculateRepayment(loanDetails),
+        repaymentFrequency: loanDetails.repaymentFrequency
+      };
+    });
+    setCalculatedAmount(data);
   };
   return [calculatedAmount, calculateRepaymentAmount];
 };

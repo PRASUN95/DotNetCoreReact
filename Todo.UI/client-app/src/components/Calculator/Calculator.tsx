@@ -5,10 +5,10 @@ import {
 } from "../../hooks/useLoanCalculator";
 
 const Calculator: React.FC = () => {
-  const handleInputChange = (e: HTMLInputElement) => {};
   const [loanAmount, setAmount] = useState<number>(1000);
   const [interestRate, setRate] = useState<number>(1);
-  const [repaymentFrequency, setFrequency] = useState<RepaymentFrequency>();
+  const [repaymentFrequency, setFrequency] =
+    useState<RepaymentFrequency>("weekly");
   const [result, calculateLoan] = useLoanCalculator({
     loanAmount,
     interestRate,
@@ -19,7 +19,8 @@ const Calculator: React.FC = () => {
   const handleRateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRate(parseFloat(e.target.value));
   };
-  const handleFrequencyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFrequencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    console.log(typeof e);
     setFrequency(e.target.value as RepaymentFrequency);
   };
   useEffect(() => {
@@ -28,12 +29,26 @@ const Calculator: React.FC = () => {
   return (
     <>
       <label htmlFor="amount">Amount</label>
-      <input type="text" name="amount" onChange={handleAmountChange} />
-      <label htmlFor="interestRate">Rate</label>
-      <input type="text" name="interestRate" onChange={handleRateChange} />
-      <label htmlFor="frequency">Frequency</label>
-      <input type="text" name="frequency" onChange={handleFrequencyChange} />
-      Result: {result}
+      <input type="text" name="amount" value={loanAmount} onChange={handleAmountChange} />
+      <br />
+      <label>
+        Repayment Frequency:
+        <select value={repaymentFrequency} onChange={handleFrequencyChange}>
+          <option value="monthly">Monthly</option>
+          <option value="weekly">Weekly</option>
+          <option value="fortnightly">Fortnightly</option>
+        </select>
+      </label>
+      <br />
+      {result.map(({ amount, repaymentFrequency }) => {
+        return (
+          <span>
+            amount : {amount}
+            frequency : {repaymentFrequency}
+            <br />
+          </span>
+        );
+      })}
     </>
   );
 };
