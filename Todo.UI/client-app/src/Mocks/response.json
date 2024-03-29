@@ -1,0 +1,16 @@
+{
+  "frequency": [
+    {
+      "id": 1,
+      "description": "monthly"
+    },
+    {
+      "id": 2,
+      "description": "weekly"
+    },
+    {
+      "id": 3,
+      "description": "fortnightly"
+    }
+  ]
+}
